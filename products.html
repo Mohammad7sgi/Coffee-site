@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>کافه رِزِرو | پیکربندی و مدیریت محصولات تخصصی</title>
+  <meta name="description" content="پیکربندی ماتریکس متغیرهای ۴گانه قهوه، رادار حسی فنجان، فرمول بهای تمام‌شده و ویرایش هوشمند گروهی قیمت‌ها"/>
+  <meta property="og:title" content="کافه رِزِرو | پیکربندی محصولات تخصصی"/>
+  <meta property="og:description" content="سامانه هوشمند مدیریت قهوه‌های تک‌خاستگاه و قیمت‌گذاری پویای کافه رِزِرو"/>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#131315",
+            "surface-container-lowest": "#0e0e10",
+            "surface-container-low": "#1b1b1d",
+            "surface-container": "#201f21",
+            "surface-container-high": "#2a2a2c",
+            "surface-container-highest": "#353437",
+            "surface-bright": "#39393b",
+            "primary": "#ffb77d",
+            "primary-container": "#d97707",
+            "on-primary": "#4d2600",
+            "on-primary-container": "#432100",
+            "secondary": "#ffb95f",
+            "secondary-container": "#ee9800",
+            "on-secondary": "#472a00",
+            "tertiary": "#ffb68e",
+            "tertiary-container": "#df732d",
+            "on-tertiary": "#532200",
+            "on-surface": "#e5e1e4",
+            "on-surface-variant": "#dbc2b0",
+            "outline": "#a38c7c",
+            "outline-variant": "#554336",
+            "error": "#ffb4ab",
+            "error-container": "#93000a",
+            "on-error": "#690005"
+          },
+          spacing: {
+            "layout-sidebar": "18rem",
+            "space-2xs": "0.25rem",
+            "space-xs": "0.5rem",
+            "space-sm": "0.75rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-2xl": "3rem"
+          },
+          fontFamily: {
+            "vazir": ["'Vazirmatn'", "'Plus Jakarta Sans'", "sans-serif"],
+            "mono": ["'JetBrains Mono'", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body class="bg-surface text-on-surface font-vazir antialiased selection:bg-primary selection:text-on-primary">
+
+  <!-- Mobile Sidebar Overlay -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+  <!-- Main Sidebar -->
+  <aside id="main-sidebar" class="fixed right-0 top-0 h-full w-layout-sidebar bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.3)] transition-transform duration-300 translate-x-full lg:translate-x-0 border-l border-surface-container-highest">
+    <div class="flex flex-col flex-1 overflow-y-auto">
+      <div class="h-16 px-space-lg flex items-center justify-between border-b border-surface-container-highest">
+        <a href="index.html" class="flex items-center gap-space-sm">
+          <div class="w-9 h-9 rounded-xl overflow-hidden shadow-sm flex items-center justify-center bg-surface-container-lowest">
+            <img src="assets/logo.svg" alt="Logo" class="h-8 w-8 object-contain"/>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-bold text-primary leading-tight">کافه رِزِرو</span>
+            <span class="text-[11px] text-on-surface-variant font-medium">پیکربندی منو</span>
+          </div>
+        </a>
+        <button class="lg:hidden text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('main-sidebar').classList.add('translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden');">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="px-space-md py-space-sm">
+        <div class="px-space-sm py-space-2xs text-on-surface-variant text-[11px] font-semibold uppercase tracking-wider">ناوبری سامانه</div>
+      </div>
+
+      <nav class="flex flex-col gap-space-2xs px-space-md flex-1">
+        <a href="index.html" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group">
+          <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">dashboard</span>
+          <span class="text-sm flex-1">داشبورد اصلی</span>
+        </a>
+
+        <a href="products.html" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl transition-all group bg-primary-container text-on-primary-container font-bold shadow-[0_4px_14px_rgba(217,119,6,0.3)]">
+          <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">restaurant_menu</span>
+          <span class="text-sm flex-1">مدیریت منو و محصولات</span>
+        </a>
+
+        <a href="about.html" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group">
+          <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">wallet</span>
+          <span class="text-sm flex-1">باشگاه مشتریان و کیف پول</span>
+        </a>
+
+        <a href="contact.html" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group">
+          <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">send</span>
+          <span class="text-sm flex-1">سفارش مستقیم تلگرام</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-space-md border-t border-surface-container-highest">
+      <div class="p-space-sm rounded-xl bg-surface-container flex items-center justify-between">
+        <span class="text-xs text-on-surface-variant">محصولات فعال منو</span>
+        <span class="font-mono text-xs text-primary font-bold">۲۴ محصول</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Page Content Container -->
+  <div class="has-sidebar min-h-screen flex flex-col">
+    <!-- Top Header -->
+    <header class="fixed top-0 right-0 lg:right-layout-sidebar left-0 h-16 bg-surface-container-low/90 backdrop-blur-xl border-b border-surface-container-highest z-40 px-space-md lg:px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-md">
+        <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-xl bg-surface-container text-on-surface" type="button">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="flex items-center gap-space-xs">
+          <a href="index.html" class="text-on-surface-variant hover:text-on-surface text-xs font-semibold">داشبورد</a>
+          <span class="text-outline-variant">/</span>
+          <span class="text-xs font-bold text-primary">افزودن و ویرایش محصول تخصصی</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-space-sm">
+        <button class="px-space-md py-1.5 rounded-xl bg-surface-container hover:bg-surface-bright text-xs font-semibold text-on-surface transition-all border border-surface-container-highest" onclick="showToast('پیش‌نویس محصول در حافظه موقت مرورگر ذخیره شد.', 'draft')">
+          ذخیره پیش‌نویس
+        </button>
+        <button class="px-space-md py-1.5 rounded-xl bg-primary text-on-primary text-xs font-bold shadow-[0_4px_14px_rgba(217,119,6,0.3)] hover:opacity-95 transition-all flex items-center gap-space-2xs" onclick="saveFullProduct()">
+          <span class="material-symbols-outlined text-sm">publish</span>
+          <span>انتشار در منوی زنده</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="w-full pt-20 flex-1 bg-surface pb-16">
+      <div class="p-space-md md:p-space-lg lg:p-space-xl flex flex-col gap-space-xl max-w-[1720px] mx-auto w-full">
+
+        <!-- Wizard Navigation Tabs -->
+        <div class="flex items-center gap-space-sm border-b border-surface-container-highest pb-space-sm overflow-x-auto">
+          <button class="wizard-tab active px-space-md py-space-sm rounded-xl font-semibold text-xs transition-all flex items-center gap-space-xs bg-primary-container text-on-primary-container shadow" onclick="switchWizardTab('tab-identity', this)">
+            <span class="material-symbols-outlined text-base">badge</span>
+            <span>۱. مشخصات هویتی و رادار حسی</span>
+          </button>
+          <button class="wizard-tab px-space-md py-space-sm rounded-xl font-semibold text-xs transition-all flex items-center gap-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="switchWizardTab('tab-matrix', this)">
+            <span class="material-symbols-outlined text-base">grid_view</span>
+            <span>۲. ماتریکس متغیرهای ۴گانه قهوه</span>
+          </button>
+          <button class="wizard-tab px-space-md py-space-sm rounded-xl font-semibold text-xs transition-all flex items-center gap-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="switchWizardTab('tab-pricing', this)">
+            <span class="material-symbols-outlined text-base">price_change</span>
+            <span>۳. حاشیه سود و بهای تمام‌شده</span>
+          </button>
+          <button class="wizard-tab px-space-md py-space-sm rounded-xl font-semibold text-xs transition-all flex items-center gap-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="switchWizardTab('tab-media', this)">
+            <span class="material-symbols-outlined text-base">phone_iphone</span>
+            <span>۴. گالری و پیش‌نمایش در کارت موبایل</span>
+          </button>
+          <button class="wizard-tab px-space-md py-space-sm rounded-xl font-semibold text-xs transition-all flex items-center gap-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="switchWizardTab('tab-bulk', this)">
+            <span class="material-symbols-outlined text-base">auto_fix_high</span>
+            <span>۵. ویرایش گروهی قیمت‌ها (تورم)</span>
+          </button>
+        </div>
+
+        <!-- TAB 1: Product Identity & Sensory Profile -->
+        <div id="tab-identity" class="wizard-content flex flex-col gap-space-lg">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+            <!-- Left 2 Cols: Form Info -->
+            <div class="lg:col-span-2 p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-lg border border-surface-container-highest">
+              <div class="flex items-center gap-space-sm">
+                <span class="w-2.5 h-6 bg-primary rounded-full"></span>
+                <h2 class="text-base font-bold text-on-surface">شناسه محصول و رُست تخصصی</h2>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">نام فارسی در منو</label>
+                  <input id="prod-fa-name" type="text" value="اسپرسو اتیوپی یرگاچف تخصصی" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm focus:outline-none focus:border-primary font-medium" oninput="syncMockup()"/>
+                </div>
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">نام انگلیسی (Latin Name)</label>
+                  <input id="prod-en-name" type="text" value="Ethiopia Yirgacheffe Single Origin" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono focus:outline-none focus:border-primary" oninput="syncMockup()"/>
+                </div>
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">دسته‌بندی در منوی دیجیتال</label>
+                  <select class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm focus:outline-none focus:border-primary">
+                    <option selected>قهوه‌های دمی و تخصصی (Specialty)</option>
+                    <option>بر پایه اسپرسو (Espresso Bar)</option>
+                    <option>بار سرد و کولدبرو (Cold Bar)</option>
+                    <option>شیرینی‌پزی دست‌ساز (Bakery)</option>
+                  </select>
+                </div>
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">درجه برشتگی (Roast Level)</label>
+                  <select class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm focus:outline-none focus:border-primary">
+                    <option selected>برشتگی متوسط-روشن (Light-Medium / Cinnamon-City)</option>
+                    <option>برشتگی متوسط (Medium / Full City)</option>
+                    <option>برشتگی تیره (Dark / French)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs font-semibold text-on-surface-variant">توضیحات حسی و داستان مزرعه (برای مشتری در منو)</label>
+                <textarea id="prod-desc" rows="3" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm focus:outline-none focus:border-primary leading-relaxed" oninput="syncMockup()">فرآوری طبیعی از ارتفاع ۲۱۰۰ متری دره چلبسا. اسیدیته شفاف مرکباتی لیمویی با طعم‌یاد گلی یاس، ترنج و ماندگاری ابریشمی عسلی در دهان.</textarea>
+              </div>
+
+              <!-- Flavor notes badges -->
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs font-semibold text-on-surface-variant">نت‌های طعمی منتخب (Flavour Tags)</label>
+                <div class="flex items-center gap-space-xs flex-wrap">
+                  <span class="px-space-sm py-1 rounded-full bg-primary-container/20 text-primary text-xs font-medium flex items-center gap-1">
+                    <span>گل یاس</span>
+                    <button type="button" class="text-primary hover:text-on-surface" onclick="this.parentElement.remove()">×</button>
+                  </span>
+                  <span class="px-space-sm py-1 rounded-full bg-primary-container/20 text-primary text-xs font-medium flex items-center gap-1">
+                    <span>ترنج و هلو</span>
+                    <button type="button" class="text-primary hover:text-on-surface" onclick="this.parentElement.remove()">×</button>
+                  </span>
+                  <span class="px-space-sm py-1 rounded-full bg-primary-container/20 text-primary text-xs font-medium flex items-center gap-1">
+                    <span>شکلات شیری</span>
+                    <button type="button" class="text-primary hover:text-on-surface" onclick="this.parentElement.remove()">×</button>
+                  </span>
+                  <span class="px-space-sm py-1 rounded-full bg-secondary-container/20 text-secondary text-xs font-medium flex items-center gap-1">
+                    <span>عسل کوهی</span>
+                    <button type="button" class="text-secondary hover:text-on-surface" onclick="this.parentElement.remove()">×</button>
+                  </span>
+                  <button type="button" class="px-space-sm py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant text-xs font-medium flex items-center gap-1" onclick="showToast('نت طعمی جدید به شناسه افزوده شد.', 'add')">
+                    <span>+ افزودن نت جدید</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 1 Col: Sensory Cup Radar -->
+            <div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-space-xs">
+                  <span class="material-symbols-outlined text-secondary">radar</span>
+                  <span class="text-sm font-bold text-on-surface">رادار حسی فنجان (Cup Profile)</span>
+                </div>
+                <span class="text-[11px] text-primary font-mono">SCA: 88.5</span>
+              </div>
+
+              <!-- Interactive Sliders -->
+              <div class="flex flex-col gap-space-md pt-space-xs">
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-on-surface-variant">اسیدیته (Acidity)</span>
+                    <span id="val-acidity" class="font-mono text-primary font-bold">۸۵٪</span>
+                  </div>
+                  <input type="range" min="0" max="100" value="85" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('val-acidity').textContent = this.value + '%'; updateRadarChart();"/>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-on-surface-variant">بادی و بافت دهانی (Body)</span>
+                    <span id="val-body" class="font-mono text-primary font-bold">۶۰٪</span>
+                  </div>
+                  <input type="range" min="0" max="100" value="60" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('val-body').textContent = this.value + '%'; updateRadarChart();"/>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-on-surface-variant">شیرینی طبیعی (Sweetness)</span>
+                    <span id="val-sweetness" class="font-mono text-primary font-bold">۷۸٪</span>
+                  </div>
+                  <input type="range" min="0" max="100" value="78" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('val-sweetness').textContent = this.value + '%'; updateRadarChart();"/>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-on-surface-variant">تلخی و گیرا (Bitterness)</span>
+                    <span id="val-bitterness" class="font-mono text-primary font-bold">۲۵٪</span>
+                  </div>
+                  <input type="range" min="0" max="100" value="25" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('val-bitterness').textContent = this.value + '%'; updateRadarChart();"/>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-on-surface-variant">عطر و آروما (Aroma)</span>
+                    <span id="val-aroma" class="font-mono text-primary font-bold">۹۲٪</span>
+                  </div>
+                  <input type="range" min="0" max="100" value="92" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('val-aroma').textContent = this.value + '%'; updateRadarChart();"/>
+                </div>
+              </div>
+
+              <!-- Pentagon Visual representation -->
+              <div class="w-full h-44 flex items-center justify-center relative mt-space-sm bg-surface-container-high rounded-xl p-2">
+                <svg id="radar-svg" class="w-full h-full" viewBox="-100 -100 200 200">
+                  <polygon points="0,-80 76,-25 47,65 -47,65 -76,-25" fill="none" stroke="#554336" stroke-width="1.5"></polygon>
+                  <polygon points="0,-50 48,-15 29,40 -29,40 -48,-15" fill="none" stroke="#353437" stroke-width="1"></polygon>
+                  <!-- Current Data polygon -->
+                  <polygon id="radar-polygon" points="0,-73 60,-15 36,50 -12,16 -70,-23" fill="rgba(217,119,6,0.3)" stroke="#ffb77d" stroke-width="2.5"></polygon>
+                  <circle cx="0" cy="-73" r="3" fill="#ffb77d"></circle>
+                  <circle cx="60" cy="-15" r="3" fill="#ffb77d"></circle>
+                  <circle cx="36" cy="50" r="3" fill="#ffb77d"></circle>
+                  <circle cx="-12" cy="16" r="3" fill="#ffb77d"></circle>
+                  <circle cx="-70" cy="-23" r="3" fill="#ffb77d"></circle>
+                </svg>
+                <div class="absolute bottom-1 right-2 text-[10px] text-on-surface-variant">پروفایل خودکار منوی وب</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Matrix of 4 Coffee Variables -->
+        <div id="tab-matrix" class="wizard-content hidden flex flex-col gap-space-lg">
+          <div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="w-2.5 h-6 bg-secondary rounded-full"></span>
+                <div class="flex flex-col">
+                  <h2 class="text-base font-bold text-on-surface">ماتریکس متغیرهای ۴گانه قهوه (SKU Matrix Generator)</h2>
+                  <span class="text-xs text-on-surface-variant">تولید خودکار کدهای یکتا بر اساس خاستگاه، سرو، فرآوری و افزودنی‌ها</span>
+                </div>
+              </div>
+              <button class="px-space-md py-space-xs rounded-lg bg-primary-container text-on-primary-container font-semibold text-xs flex items-center gap-space-2xs hover:bg-secondary-container transition-all" onclick="showToast('ردیف متغیر جدید به جدول ماتریکس اضافه شد.', 'add_circle')">
+                <span class="material-symbols-outlined text-sm">add</span>
+                <span>افزودن واریانت سفارشی</span>
+              </button>
+            </div>
+
+            <!-- Matrix Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-right border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-high text-on-surface-variant text-xs font-semibold">
+                    <th class="p-space-md rounded-r-lg">شناسه SKU</th>
+                    <th class="p-space-md">ترکیب متغیرها</th>
+                    <th class="p-space-md">سایز / سرو</th>
+                    <th class="p-space-md">بهای تمام‌شده</th>
+                    <th class="p-space-md">قیمت منو</th>
+                    <th class="p-space-md">سود ناخالص</th>
+                    <th class="p-space-md rounded-l-lg text-center">وضعیت در منو</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y-0 text-on-surface text-sm">
+                  <!-- Row 1 -->
+                  <tr class="hover:bg-surface-container-high/50 transition-colors">
+                    <td class="p-space-md font-mono text-xs text-primary font-bold">ETH-YIRG-SGL</td>
+                    <td class="p-space-md">
+                      <div class="flex flex-col">
+                        <span class="font-medium text-xs">اتیوپی ۱۰۰٪ عربیکا • شسته</span>
+                        <span class="text-[11px] text-on-surface-variant">پایه اسپرسو کلاسیک</span>
+                      </div>
+                    </td>
+                    <td class="p-space-md font-mono text-xs">شات تکی (Single 18g)</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۲۲,۵۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs font-bold text-on-surface">۶۵,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400 font-bold">۶۵.۳٪ (۴۲,۵۰۰ ت)</td>
+                    <td class="p-space-md text-center">
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer" onchange="showToast('وضعیت عرضه SKU تغییر یافت.', 'toggle_on')">
+                        <div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2 -->
+                  <tr class="hover:bg-surface-container-high/50 transition-colors">
+                    <td class="p-space-md font-mono text-xs text-primary font-bold">ETH-YIRG-DBL</td>
+                    <td class="p-space-md">
+                      <div class="flex flex-col">
+                        <span class="font-medium text-xs">اتیوپی ۱۰۰٪ عربیکا • شسته</span>
+                        <span class="text-[11px] text-on-surface-variant">عصاره‌گیری دوگانه دابل</span>
+                      </div>
+                    </td>
+                    <td class="p-space-md font-mono text-xs">دابل شات (Double 36g)</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۲۹,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs font-bold text-on-surface">۷۵,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400 font-bold">۶۱.۳٪ (۴۶,۰۰۰ ت)</td>
+                    <td class="p-space-md text-center">
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer" onchange="showToast('وضعیت عرضه SKU تغییر یافت.', 'toggle_on')">
+                        <div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3 -->
+                  <tr class="hover:bg-surface-container-high/50 transition-colors">
+                    <td class="p-space-md font-mono text-xs text-primary font-bold">ETH-YIRG-OAT</td>
+                    <td class="p-space-md">
+                      <div class="flex flex-col">
+                        <span class="font-medium text-xs">اتیوپی + شیر جو دوسر وگان</span>
+                        <span class="text-[11px] text-secondary">گزینه محبوب باریستا</span>
+                      </div>
+                    </td>
+                    <td class="p-space-md font-mono text-xs">فلت وایت (۲۰۰ml)</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۳۸,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs font-bold text-on-surface">۹۵,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400 font-bold">۶۰.۰٪ (۵۷,۰۰۰ ت)</td>
+                    <td class="p-space-md text-center">
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer" onchange="showToast('وضعیت عرضه SKU تغییر یافت.', 'toggle_on')">
+                        <div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- Row 4 -->
+                  <tr class="hover:bg-surface-container-high/50 transition-colors">
+                    <td class="p-space-md font-mono text-xs text-primary font-bold">ETH-YIRG-COLD</td>
+                    <td class="p-space-md">
+                      <div class="flex flex-col">
+                        <span class="font-medium text-xs">عصاره سرد دم (Slow Drip 18h)</span>
+                        <span class="text-[11px] text-tertiary">سرو در بطری اختصاصی شیشه‌ای</span>
+                      </div>
+                    </td>
+                    <td class="p-space-md font-mono text-xs">بطری ۲۵۰ml</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۴۲,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs font-bold text-on-surface">۱۱۰,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400 font-bold">۶۱.۸٪ (۶۸,۰۰۰ ت)</td>
+                    <td class="p-space-md text-center">
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer" onchange="showToast('وضعیت عرضه SKU تغییر یافت.', 'toggle_on')">
+                        <div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+                      </label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Realtime Margin Formula & Inventory -->
+        <div id="tab-pricing" class="wizard-content hidden flex flex-col gap-space-lg">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+            <!-- Cost & Margin Calculator (2 cols) -->
+            <div class="lg:col-span-2 p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+              <div class="flex items-center gap-space-sm">
+                <span class="w-2.5 h-6 bg-primary rounded-full"></span>
+                <div class="flex flex-col">
+                  <h2 class="text-base font-bold text-on-surface">فرمول برخط بهای تمام‌شده و سودآوری</h2>
+                  <span class="text-xs text-on-surface-variant">محاسبه هوشمند بر اساس قیمت خرید دان قهوه، دستمزد و مالیات</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">قیمت خرید ۱ کیلو دانه سبز/رُست شده (تومان)</label>
+                  <input id="calc-bean-price" type="number" value="1100000" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono focus:outline-none focus:border-primary" oninput="calculateMargin()"/>
+                </div>
+
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">وزن دانه در هر شات دابل (گرم)</label>
+                  <input id="calc-dose-gram" type="number" value="20" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono focus:outline-none focus:border-primary" oninput="calculateMargin()"/>
+                </div>
+
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">سربار، استهلاک دستگاه و حقوق باریستا (تومان)</label>
+                  <input id="calc-overhead" type="number" value="8500" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono focus:outline-none focus:border-primary" oninput="calculateMargin()"/>
+                </div>
+
+                <div class="flex flex-col gap-space-xs">
+                  <label class="text-xs font-semibold text-on-surface-variant">بسته‌بندی یا لیوان بیرون‌بر (تومان)</label>
+                  <input id="calc-cup-cost" type="number" value="3500" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono focus:outline-none focus:border-primary" oninput="calculateMargin()"/>
+                </div>
+              </div>
+
+              <!-- Margin Goal Slider -->
+              <div class="p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-xs mt-space-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-on-surface">درصد حاشیه سود ناخالص هدف (Target Gross Margin):</span>
+                  <span id="target-margin-display" class="font-mono text-base font-bold text-primary">۶۰٪</span>
+                </div>
+                <input id="target-margin-slider" type="range" min="30" max="80" value="60" class="w-full accent-primary cursor-pointer" oninput="document.getElementById('target-margin-display').textContent = this.value + '٪'; calculateMargin();"/>
+              </div>
+
+              <!-- Output Cards -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+                <div class="p-space-md rounded-xl bg-surface-container-lowest flex flex-col">
+                  <span class="text-xs text-on-surface-variant">بهای تمام‌شده هر فنجان</span>
+                  <span id="cost-per-cup" class="font-mono text-lg font-bold text-on-surface mt-1">۳۴,۰۰۰ تومان</span>
+                </div>
+                <div class="p-space-md rounded-xl bg-surface-container-lowest flex flex-col">
+                  <span class="text-xs text-on-surface-variant">سود خالص هر فنجان</span>
+                  <span id="profit-per-cup" class="font-mono text-lg font-bold text-emerald-400 mt-1">۵۱,۰۰۰ تومان</span>
+                </div>
+                <div class="p-space-md rounded-xl bg-surface-container-lowest flex flex-col border border-primary-container/40">
+                  <span class="text-xs text-primary font-semibold">قیمت پیشنهادی منوی دیجیتال</span>
+                  <span id="suggested-price" class="font-mono text-lg font-bold text-primary mt-1">۸۵,۰۰۰ تومان</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Inventory Point and Auto Reorder -->
+            <div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-on-surface">تنظیمات انبار هوشمند</span>
+                <span class="material-symbols-outlined text-secondary">inventory_2</span>
+              </div>
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs text-on-surface-variant">موجودی فعلی در انبار بار</label>
+                <input type="text" value="۸.۵ کیلوگرم" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono"/>
+              </div>
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs text-on-surface-variant">نقطه سفارش مجدد (Reorder Threshold)</label>
+                <input type="text" value="۲.۰ کیلوگرم" class="px-space-md py-space-sm rounded-xl bg-surface-container-high border border-surface-container-highest text-on-surface text-sm font-mono"/>
+              </div>
+              <div class="p-space-sm rounded-xl bg-surface-container-high text-xs text-on-surface-variant flex items-center gap-space-xs mt-space-sm">
+                <span class="material-symbols-outlined text-primary text-base">sms</span>
+                <span>در صورت رسیدن به ۲ کیلوگرم، پیامک سفارش خودکار برای رُستری ارسال می‌شود.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Media Upload & Live Mobile Menu Mockup -->
+        <div id="tab-media" class="wizard-content hidden flex flex-col gap-space-lg">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+            <!-- Media Upload Controls (2 cols) -->
+            <div class="lg:col-span-2 p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+              <div class="flex items-center gap-space-sm">
+                <span class="w-2.5 h-6 bg-primary rounded-full"></span>
+                <div class="flex flex-col">
+                  <h2 class="text-base font-bold text-on-surface">تصویر محصول و گالری چندرسانه‌ای</h2>
+                  <span class="text-xs text-on-surface-variant">عکس حرفه‌ای اسپرسو با پس‌زمینه کافه و نور گرم</span>
+                </div>
+              </div>
+
+              <!-- Main Drop Zone -->
+              <div class="border-2 border-dashed border-surface-container-highest hover:border-primary transition-colors rounded-2xl p-space-xl flex flex-col items-center justify-center text-center cursor-pointer bg-surface-container-low" onclick="showToast('پنجره انتخاب فایل باز شد. (شبیه‌سازی)', 'image')">
+                <div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-space-sm">
+                  <span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+                </div>
+                <span class="text-sm font-semibold text-on-surface">عکس اصلی محصول را بکشید و رها کنید</span>
+                <span class="text-xs text-on-surface-variant mt-1">فرمت‌های مجاز: JPG, PNG, WEBP حداکثر ۳ مگابایت</span>
+              </div>
+
+              <!-- Preset Media Library Pickers -->
+              <div class="flex flex-col gap-space-xs pt-space-xs">
+                <span class="text-xs font-semibold text-on-surface-variant">انتخاب سریع از عکس‌های اختصاصی آرشیو کافه:</span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+                  <div class="relative rounded-xl overflow-hidden cursor-pointer border-2 border-primary group" onclick="selectCardPhoto('https://lh3.googleusercontent.com/aida-public/AB6AXuCgO4z57NPJj1JQjFv0sdn-zpS-23XARPsQh4hryvVyHm9URPq4ORcBrXyUkaDGXRnYcSDPE9Xn9IW-JxPMAyCWSkLR5hXpDdGWJNCtAYc7K6bVeuns-qYPNcOAQ3pt5EQcKWt8_IGORC-6KEX1SGASu67psTN1xfgyIojgq_CR5CRL0-LPbd2kBjRHHBno3yVy4HF3yw3zS8AV2qBYyJBmL5wGbzElU9oFFi3Z5mjxAXVTrv9uUUWC')">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgO4z57NPJj1JQjFv0sdn-zpS-23XARPsQh4hryvVyHm9URPq4ORcBrXyUkaDGXRnYcSDPE9Xn9IW-JxPMAyCWSkLR5hXpDdGWJNCtAYc7K6bVeuns-qYPNcOAQ3pt5EQcKWt8_IGORC-6KEX1SGASu67psTN1xfgyIojgq_CR5CRL0-LPbd2kBjRHHBno3yVy4HF3yw3zS8AV2qBYyJBmL5wGbzElU9oFFi3Z5mjxAXVTrv9uUUWC" class="w-full h-24 object-cover"/>
+                    <span class="absolute bottom-1 right-1 bg-black/70 text-primary text-[10px] px-1 rounded font-bold">اسپرسو اتیوپی</span>
+                  </div>
+                  <div class="relative rounded-xl overflow-hidden cursor-pointer border border-surface-container-highest hover:border-primary group" onclick="selectCardPhoto('https://lh3.googleusercontent.com/aida-public/AB6AXuCC4CgnpVzJJX8hN2XDaOpQM11PrPHoYnezn8LwUoO_a9K3aqtOoeI-m8ha4yGjGVZzEcEPFQKaq-_2KszpygS7oe5pHoUOlOL-NtoA9q7Keow2Zl7_PjCQHOHnziIxcQM395JW_W5Y2Z6XwkRUZm95D0M2hmVbN1IBACOQQTxDmzIgYsEz9W3NPX7omGydN2phWJsOPcPRvuwoq_K15k5NCgFJ-ymtOxIPhYbep4Ip9jY9zlukI2wt')">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC4CgnpVzJJX8hN2XDaOpQM11PrPHoYnezn8LwUoO_a9K3aqtOoeI-m8ha4yGjGVZzEcEPFQKaq-_2KszpygS7oe5pHoUOlOL-NtoA9q7Keow2Zl7_PjCQHOHnziIxcQM395JW_W5Y2Z6XwkRUZm95D0M2hmVbN1IBACOQQTxDmzIgYsEz9W3NPX7omGydN2phWJsOPcPRvuwoq_K15k5NCgFJ-ymtOxIPhYbep4Ip9jY9zlukI2wt" class="w-full h-24 object-cover"/>
+                    <span class="absolute bottom-1 right-1 bg-black/70 text-on-surface text-[10px] px-1 rounded font-bold">فنجان سرامیکی</span>
+                  </div>
+                  <div class="relative rounded-xl overflow-hidden cursor-pointer border border-surface-container-highest hover:border-primary group" onclick="selectCardPhoto('https://lh3.googleusercontent.com/aida-public/AB6AXuBVHseRbuxdoYPRukcVS-hsZC1wJ7gCPYqY-lufmJa6-VDi_jBD_6SgqceBjQNOmB4WRcNBP_N8UjKbaZ1gkR14TE1ugSaYJWw1awpP6FDXm11uupOHCfk8jGNCt106_uD7FE0vrlELHWU0_woaJ8CFhMZcdc3wE7ALbYTRjpz26CvdNbl6fg3kHyQGDu2a_vY0UqJO14L4jIlPBhN5WfpM5dRYmS2SZVzm9nGTDoJH9o-RBLvuhGi7')">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVHseRbuxdoYPRukcVS-hsZC1wJ7gCPYqY-lufmJa6-VDi_jBD_6SgqceBjQNOmB4WRcNBP_N8UjKbaZ1gkR14TE1ugSaYJWw1awpP6FDXm11uupOHCfk8jGNCt106_uD7FE0vrlELHWU0_woaJ8CFhMZcdc3wE7ALbYTRjpz26CvdNbl6fg3kHyQGDu2a_vY0UqJO14L4jIlPBhN5WfpM5dRYmS2SZVzm9nGTDoJH9o-RBLvuhGi7" class="w-full h-24 object-cover"/>
+                    <span class="absolute bottom-1 right-1 bg-black/70 text-on-surface text-[10px] px-1 rounded font-bold">دانه‌های برشته</span>
+                  </div>
+                  <div class="relative rounded-xl overflow-hidden cursor-pointer border border-surface-container-highest hover:border-primary group" onclick="selectCardPhoto('https://lh3.googleusercontent.com/aida-public/AB6AXuBYVVrmwAqaoI9qiOiIet5dvb3yfBmzGptaGUSQNdZKzbkZACSQBCTsfjIqg2GUU82t5THK20E8fOdFe6_voCc2C4npev6kI5xteqFy-Wy2kQ9RGbTN7wTg8_711n62KCveiz56aVPwGJg3gBJ0hDq1uc_EN3--H_He4H7SsnPljYZUUsJZAV9aCaJuDQ9oZfcxQY74f-6Ia53N6eCeW1uoo-GkgaGXZKJZdq7tmHGc1L2AfAi2e8qi')">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYVVrmwAqaoI9qiOiIet5dvb3yfBmzGptaGUSQNdZKzbkZACSQBCTsfjIqg2GUU82t5THK20E8fOdFe6_voCc2C4npev6kI5xteqFy-Wy2kQ9RGbTN7wTg8_711n62KCveiz56aVPwGJg3gBJ0hDq1uc_EN3--H_He4H7SsnPljYZUUsJZAV9aCaJuDQ9oZfcxQY74f-6Ia53N6eCeW1uoo-GkgaGXZKJZdq7tmHGc1L2AfAi2e8qi" class="w-full h-24 object-cover"/>
+                    <span class="absolute bottom-1 right-1 bg-black/70 text-on-surface text-[10px] px-1 rounded font-bold">بسته ۲۵۰ گرمی</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 1 Col: Live Phone Digital Menu Mockup -->
+            <div class="p-space-lg rounded-2xl bg-surface-container shadow-xl flex flex-col items-center border border-surface-container-highest">
+              <span class="text-xs font-bold text-on-surface-variant mb-space-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                پیش‌نمایش زنده در منوی موبایل مشتری
+              </span>
+
+              <!-- Mockup Device Frame -->
+              <div class="w-full max-w-[280px] rounded-[36px] bg-surface-container-lowest p-3 border-4 border-surface-container-highest shadow-2xl">
+                <!-- Phone Speaker Notch -->
+                <div class="w-24 h-4 bg-surface-container-highest rounded-full mx-auto mb-2"></div>
+
+                <!-- Customer Menu Item Card -->
+                <div class="rounded-2xl bg-surface-container-low overflow-hidden border border-surface-container-highest flex flex-col">
+                  <div class="relative h-44 w-full overflow-hidden">
+                    <img id="mockup-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgO4z57NPJj1JQjFv0sdn-zpS-23XARPsQh4hryvVyHm9URPq4ORcBrXyUkaDGXRnYcSDPE9Xn9IW-JxPMAyCWSkLR5hXpDdGWJNCtAYc7K6bVeuns-qYPNcOAQ3pt5EQcKWt8_IGORC-6KEX1SGASu67psTN1xfgyIojgq_CR5CRL0-LPbd2kBjRHHBno3yVy4HF3yw3zS8AV2qBYyJBmL5wGbzElU9oFFi3Z5mjxAXVTrv9uUUWC" class="w-full h-full object-cover"/>
+                    <span class="absolute top-2 right-2 bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full shadow">پیشنهاد باریستا</span>
+                  </div>
+                  <div class="p-space-md flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                      <span id="mockup-fa-name" class="text-xs font-bold text-on-surface">اسپرسو اتیوپی یرگاچف</span>
+                    </div>
+                    <span id="mockup-en-name" class="text-[10px] font-mono text-on-surface-variant">Ethiopia Yirgacheffe</span>
+                    <p id="mockup-desc" class="text-[11px] text-on-surface-variant line-clamp-2 mt-1">فرآوری طبیعی با اسیدیته شفاف مرکباتی و کرمای طلایی</p>
+
+                    <div class="flex items-center justify-between pt-space-xs mt-1 border-t border-surface-container-highest">
+                      <span id="mockup-price" class="font-mono text-xs font-bold text-primary">۷۵,۰۰۰ تومان</span>
+                      <button class="w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow">
+                        <span class="material-symbols-outlined text-sm">add</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 text-center">
+                  <span class="text-[10px] text-on-surface-variant">کافه رِزِرو • سفارش مستقیم بدون گارسون</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: Bulk Price Editor & Inflation Batch Adjustment -->
+        <div id="tab-bulk" class="wizard-content hidden flex flex-col gap-space-lg">
+          <div class="p-space-lg rounded-xl bg-surface-container shadow-md flex flex-col gap-space-md border border-surface-container-highest">
+            <div class="flex items-center gap-space-sm">
+              <span class="w-2.5 h-6 bg-secondary rounded-full"></span>
+              <div class="flex flex-col">
+                <h2 class="text-base font-bold text-on-surface">ویرایش هوشمند گروهی قیمت‌ها و تعدیل تورم (Smart Batch Pricing)</h2>
+                <span class="text-xs text-on-surface-variant">افزایش یا کاهش درصدی قیمت‌ها روی کل منو یا دسته‌ای خاص بدون نیاز به ویرایش دستی تک‌تک اقلام</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md p-space-md rounded-xl bg-surface-container-high">
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs font-semibold text-on-surface-variant">دسته هدف</label>
+                <select id="bulk-cat-select" class="px-space-md py-space-sm rounded-xl bg-surface-container border border-surface-container-highest text-on-surface text-xs focus:outline-none">
+                  <option>کل اقلام منو (۲۴ محصول)</option>
+                  <option>فقط بار اسپرسو و قهوه تخصصی</option>
+                  <option>شیرینی و بار سرد</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-space-xs">
+                <label class="text-xs font-semibold text-on-surface-variant">درصد تغییر اعمالی</label>
+                <div class="flex items-center gap-space-xs">
+                  <input id="bulk-percentage-input" type="number" value="15" class="w-28 px-space-md py-space-sm rounded-xl bg-surface-container border border-surface-container-highest text-on-surface text-xs font-mono"/>
+                  <span class="text-xs text-on-surface-variant">درصد (%)</span>
+                </div>
+              </div>
+
+              <div class="flex items-end">
+                <button class="w-full px-space-md py-space-sm rounded-xl bg-primary text-on-primary font-bold text-xs shadow hover:opacity-90 transition-all flex items-center justify-center gap-space-xs" onclick="applyBulkPriceSimulation()">
+                  <span class="material-symbols-outlined text-sm">calculate</span>
+                  <span>محاسبه و پیش‌نمایش آنی قیمت‌های جدید</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Bulk Review Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-right border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-high text-on-surface-variant text-xs font-semibold">
+                    <th class="p-space-md rounded-r-lg">نام محصول در منو</th>
+                    <th class="p-space-md">دسته</th>
+                    <th class="p-space-md">قیمت کنونی</th>
+                    <th class="p-space-md">قیمت جدید با ضریب محاسبه‌شده</th>
+                    <th class="p-space-md">تاثیر بر سود ناخالص</th>
+                    <th class="p-space-md rounded-l-lg text-left">تایید ردیف</th>
+                  </tr>
+                </thead>
+                <tbody id="bulk-table-body" class="divide-y-0 text-on-surface text-sm">
+                  <tr class="hover:bg-surface-container-high/40 transition-colors">
+                    <td class="p-space-md font-semibold text-xs">اسپرسو اتیوپی یرگاچف</td>
+                    <td class="p-space-md text-xs text-on-surface-variant">تخصصی</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۷۵,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-primary font-bold bulk-new-price">۸۶,۲۵۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400">+۸.۴٪</td>
+                    <td class="p-space-md text-left"><span class="material-symbols-outlined text-primary text-base">check_circle</span></td>
+                  </tr>
+                  <tr class="hover:bg-surface-container-high/40 transition-colors">
+                    <td class="p-space-md font-semibold text-xs">فلت وایت با شیر جو دوسر</td>
+                    <td class="p-space-md text-xs text-on-surface-variant">بار اسپرسو</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۹۵,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-primary font-bold bulk-new-price">۱۰۹,۲۵۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400">+۹.۱٪</td>
+                    <td class="p-space-md text-left"><span class="material-symbols-outlined text-primary text-base">check_circle</span></td>
+                  </tr>
+                  <tr class="hover:bg-surface-container-high/40 transition-colors">
+                    <td class="p-space-md font-semibold text-xs">کیک شکلاتی دست‌ساز بلژیکی</td>
+                    <td class="p-space-md text-xs text-on-surface-variant">شیرینی‌پزی</td>
+                    <td class="p-space-md font-mono text-xs text-on-surface-variant">۸۹,۰۰۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-primary font-bold bulk-new-price">۱۰۲,۳۵۰ ت</td>
+                    <td class="p-space-md font-mono text-xs text-emerald-400">+۷.۵٪</td>
+                    <td class="p-space-md text-left"><span class="material-symbols-outlined text-primary text-base">check_circle</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="flex items-center justify-end gap-space-sm pt-space-xs">
+              <button class="px-space-lg py-space-sm rounded-xl bg-primary-container text-on-primary-container font-bold text-xs hover:bg-secondary-container transition-all shadow-md" onclick="showToast('همه قیمت‌های جدید در دیتابیس منوی دیجیتال اعمال و منتشر گردید!', 'done_all')">
+                تایید و اعمال نهایی در منوی دیجیتال کافه
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function switchWizardTab(tabId, btn) {
+      document.querySelectorAll('.wizard-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.wizard-tab').forEach(el => {
+        el.classList.remove('active', 'bg-primary-container', 'text-on-primary-container', 'shadow');
+        el.classList.add('bg-surface-container', 'text-on-surface-variant');
+      });
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.remove('hidden');
+
+      if (btn) {
+        btn.classList.add('active', 'bg-primary-container', 'text-on-primary-container', 'shadow');
+        btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      }
+    }
+
+    // Live sync inputs to customer mockup
+    function syncMockup() {
+      const faName = document.getElementById('prod-fa-name')?.value || 'اسپرسو تخصصی';
+      const enName = document.getElementById('prod-en-name')?.value || 'Espresso Specialty';
+      const desc = document.getElementById('prod-desc')?.value || '';
+
+      const mFa = document.getElementById('mockup-fa-name');
+      const mEn = document.getElementById('mockup-en-name');
+      const mDesc = document.getElementById('mockup-desc');
+
+      if (mFa) mFa.textContent = faName;
+      if (mEn) mEn.textContent = enName;
+      if (mDesc) mDesc.textContent = desc;
+    }
+
+    function selectCardPhoto(url) {
+      const mockImg = document.getElementById('mockup-img');
+      if (mockImg) mockImg.src = url;
+      showToast('تصویر محصول با موفقیت به عنوان عکس شاخص انتخاب شد.', 'photo');
+    }
+
+    function calculateMargin() {
+      const beanKg = parseFloat(document.getElementById('calc-bean-price')?.value) || 1100000;
+      const dose = parseFloat(document.getElementById('calc-dose-gram')?.value) || 20;
+      const overhead = parseFloat(document.getElementById('calc-overhead')?.value) || 8500;
+      const cup = parseFloat(document.getElementById('calc-cup-cost')?.value) || 3500;
+      const targetMargin = (parseFloat(document.getElementById('target-margin-slider')?.value) || 60) / 100;
+
+      const beanCostPerCup = (beanKg / 1000) * dose;
+      const totalCost = Math.round(beanCostPerCup + overhead + cup);
+      const suggestedPrice = Math.round(totalCost / (1 - targetMargin) / 1000) * 1000;
+      const profit = suggestedPrice - totalCost;
+
+      const costEl = document.getElementById('cost-per-cup');
+      const profitEl = document.getElementById('profit-per-cup');
+      const priceEl = document.getElementById('suggested-price');
+      const mockPriceEl = document.getElementById('mockup-price');
+
+      if (costEl) costEl.textContent = totalCost.toLocaleString('fa-IR') + ' تومان';
+      if (profitEl) profitEl.textContent = profit.toLocaleString('fa-IR') + ' تومان';
+      if (priceEl) priceEl.textContent = suggestedPrice.toLocaleString('fa-IR') + ' تومان';
+      if (mockPriceEl) mockPriceEl.textContent = suggestedPrice.toLocaleString('fa-IR') + ' تومان';
+    }
+
+    function updateRadarChart() {
+      // Small visualization update for the polygon
+      const a = (parseFloat(document.getElementById('val-acidity')?.textContent) || 85) * 0.85;
+      const b = (parseFloat(document.getElementById('val-body')?.textContent) || 60) * 0.75;
+      const s = (parseFloat(document.getElementById('val-sweetness')?.textContent) || 78) * 0.65;
+      const bi = (parseFloat(document.getElementById('val-bitterness')?.textContent) || 25) * 0.65;
+      const ar = (parseFloat(document.getElementById('val-aroma')?.textContent) || 92) * 0.8;
+
+      const poly = document.getElementById('radar-polygon');
+      if (poly) {
+        poly.setAttribute('points', `0,-${Math.round(a)} ${Math.round(ar*0.75)},-${Math.round(ar*0.2)} ${Math.round(s*0.5)},${Math.round(s*0.6)} -${Math.round(bi*0.5)},${Math.round(bi*0.6)} -${Math.round(b*0.75)},-${Math.round(b*0.2)}`);
+      }
+    }
+
+    function saveFullProduct() {
+      showToast('محصول جدید در منوی دیجیتال منتشر شد و برای سفارش‌گیری آنلاین در دسترس است!', 'check_circle');
+    }
+
+    function applyBulkPriceSimulation() {
+      const pct = parseFloat(document.getElementById('bulk-percentage-input')?.value) || 15;
+      const mult = 1 + (pct / 100);
+
+      const bases = [75000, 95000, 89000];
+      const rows = document.querySelectorAll('.bulk-new-price');
+      rows.forEach((el, i) => {
+        const base = bases[i] || 75000;
+        const newPrice = Math.round((base * mult) / 1000) * 1000;
+        el.textContent = newPrice.toLocaleString('fa-IR') + ' ت';
+      });
+
+      showToast(`محاسبه تغییر ${pct}٪ روی قیمت‌ها انجام شد.`, 'calculate');
+    }
+
+    // Check hash for direct tab
+    window.addEventListener('load', () => {
+      if (window.location.hash === '#step-pricing') {
+        const btn = document.querySelectorAll('.wizard-tab')[2];
+        switchWizardTab('tab-pricing', btn);
+      } else if (window.location.hash === '#step-media') {
+        const btn = document.querySelectorAll('.wizard-tab')[3];
+        switchWizardTab('tab-media', btn);
+      }
+    });
+  </script>
+</body>
+</html>
